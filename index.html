@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha School</title>
+    <style>
+        header {
+            background-color: #0e11ac;
+            box-sizing: border-box;
+            border-color: rgb(222, 222, 226);
+            width: auto;
+            height: auto;
+            padding: 2px;
+
+
+        }
+        body{
+            background-color: beige;
+            width: 100;
+            height: 100;
+        }
+
+        .home {
+            justify-content: space-around;
+            display: flex;
+            font-size: 35px;
+            color: white;
+
+            width: 100%;
+            height: 100%;
+            background-color: rgb(23, 23, 220);
+        }
+
+        @media(width:auto){
+            
+        }
+
+        .h2025 {
+            gap: 10px;
+            justify-content: flex-end;
+            display: flex;
+            background-color: #3e48d092;
+            overflow: hidden;
+
+
+        }
+
+        p {
+            text-transform: capitalize;
+            text-align: center;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+
+        }
+
+
+        .facebook {
+            display: flex;
+            animation-name: facebook;
+            animation-duration: 2s;
+            animation-delay: 0.1s;
+            margin: 2px 5px;
+
+
+        }
+
+        .h2025:hover img {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .instagram {
+            display: flex;
+            animation-name: facebook;
+            animation-duration: 2s;
+            animation-delay: 0.1s;
+            margin: 2px 5px;
+        }
+
+        .youtube {
+            display: flex;
+            animation-name: facebook;
+            animation-duration: 2s;
+            animation-delay: 0.1s;
+            margin: 2px 5px;
+
+
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        ul li {
+            float: left;
+        }
+
+        ul li a {
+            display: flex;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            justify-content: center;
+            font-size: 25px;
+            transition: background-color 0.3s ease;
+
+        }
+
+        ul li a:hover {
+            background-color: #1120cbb6;
+
+            transform: scale(1.05);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        h2.q {
+            justify-content: center;
+            text-align: center;
+        }
+
+
+        div.admission {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            background-color: #3e48d092;
+            justify-content: space-evenly;
+            color: white;
+            font-size: 25px;
+            gap: 0;
+            display: flex;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        #ph {
+            justify-content: right;
+        }
+
+        #dropdown {
+            text-align: center;
+            background-color: white;
+            box-shadow: 0;
+            box-sizing: 2px;
+            overflow: hidden;
+        }
+
+        #tc {
+            background-color: white;
+            color: black;
+            font-size: medium;
+
+
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0;
+            border-color: white;
+            font-size: 22px;
+        }
+
+        #logoschool img {
+            justify-content: flex-start;
+            display: flex;
+            align-items: left;
+            height: 100px;
+        }
+
+        .about-content {
+            background-color: #f4f6ff;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+        }
+
+        .about-content h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #0e11ac;
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .about-content .signature {
+            text-align: right;
+            font-style: italic;
+            color: #555;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admission">
+        <a href="admission.pdf" download>
+
+            <img src="formlogo.png" height="35px" width="25px"> Admission Form
+        </a>
+        <header class="h2025">
+            <a herf="#"> <img class="facebook" src="https://cdn-icons-png.flaticon.com/128/1312/1312139.png"
+                    height="45px" width="35px"></a><br>
+            <a herf="#"><img class="instagram" src="https://cdn-icons-png.flaticon.com/128/174/174855.png" height="45px"
+                    width="35px"></a>
+            <a herf="#"> <img class="youtube" src="https://cdn-icons-png.flaticon.com/128/174/174883.png" height="45px"
+                    width="35px"></a>
+        </header>
+
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about" class="active">
+                <img src="about.png" height="45" width="35">About Us
+            </a></li>
+            <li class="dropdown">
+                <a href="#transfer" class="active">
+                  
+                    <select id="tc">
+                        <option value="tc4">Academic</option>
+                        <option value="tc1">PRE-PRIMARY PROGRAMME</option>
+                        <option value="tc2">PRIMARY TO SENIOR SECONDARY</option>
+                        <option value="tc3">Syllabus</option>
+                    </select></a>
+            </li>
+
+            <li><a href="#Academics" class="active"></a></li>
+            <li><a href="galary.html" class="active">
+                <img src="galary.png" height="45" width="35">Galary
+            </a></li>
+            <li class="dropdown">
+                <a href="#transfer" class="active">
+                    <select id="tc">
+                        <option value="tc1">Transfer Certificate</option>
+                        <option value="tc2">Guidelines For T.C Certificate</option>
+                        <option value="tc3">Check Status</option>
+                    </select></a>
+            </li>
+
+
+            <li><a href="#contact-us" class="active">
+                <img src="contact.png" height="45" width="35">Contact Us
+            </a></li>
+            <li><a href="admin.php" class="active">
+                <img src="admin.png" height="45" width="35">Admin
+            </a></li>
+        </ul>
+    </nav>
+
+    <header class="home">
+        <img id="logoschool" src="school.png" height="300px" width="300px" style="border-radius: 150px;">
+
+        <h1>Alpha School</h1>
+    </header>
+    <div class="schoolbanner">
+        <img src="collaege1.png" height="auto" width="100%" style="border-radius: 2px;">
+    </div>
+    <section id="about">
+        <div class="about-content">
+            <h2>Welcome to Alpha School</h2>
+            <p>
+                <strong>To our students:</strong><br>
+                You are the heartbeat of Alpha School. Every moment—whether in the classroom, on the field, or through
+                creative expression—adds to our legacy of excellence. Embrace challenges, celebrate your progress, and
+                remember: you’re never alone on this journey.
+            </p>
+            <p>
+                <strong>To our guardians:</strong><br>
+                Your trust and encouragement form the foundation of our students’ success. Thank you for partnering with
+                us in shaping a nurturing environment where every child can thrive—academically, emotionally, and
+                socially.
+            </p>
+            <p>
+                Let this year be filled with curiosity, courage, and connection. Together, we build a future to be proud
+                of—hand in hand, heart to heart.
+            </p>
+            <p class="signature">Warm regards,<br><strong>Alpha School</strong></p>
+        </div>
+    </section>
+
+</body>
+
+</html>
