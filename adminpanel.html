@@ -2,783 +2,755 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha School Admin Panel</title>
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: bisque;
-        }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f6fa;
+    }
 
-        .log {
-            background-color: white;
-            width: 100%;
-            font-size: 25px;
-            color: black;
-            justify-content: space-evenly;
+    /* SIDEBAR */
+    .sidebar {
+      width: 250px;
+      background-color: #2f3542;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding-top: 30px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
 
-        }
+    .sidebar h2 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #70a1ff;
+    }
 
-        a {
-            text-decoration: none;
-        }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 15px 20px;
+      display: block;
+      font-size: 18px;
+      border-left: 4px solid transparent;
+      transition: all 0.3s;
+    }
 
-        h1 {
-            font-size: 35px;
-            color: black;
-            justify-content: center;
-            text-align: center;
-        }
+    .sidebar a:hover {
+      background-color: #57606f;
+      border-left: 4px solid #1e90ff;
+    }
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: white;
-            justify-content: center;
-            gap: 2px;
-        }
+    /* MAIN CONTENT */
+    .main-content {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      padding: 20px;
+    }
 
-        ul li {
-            float: left;
-        }
+    /* HEADER */
+    header {
+      background-color: #1e90ff;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        ul li a {
-            display: flex;
-            color: black;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            justify-content: center;
-            font-size: 25px;
-            transition: background-color 0.3s ease;
+    header h1 {
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
 
-        }
+    header button {
+      background-color: #fff;
+      color: #1e90ff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        ul li a:hover {
-            background-color: #1120cbb6;
+    header button:hover {
+      background-color: #f1f2f6;
+    }
 
-            transform: scale(1.05);
-        }
+    /* DROPDOWN */
+    .admin-select {
+      margin: 25px 0;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
+    select {
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 6px;
-            text-align: center;
-        }
+    /* SEARCH BOX */
+    #searchInput {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin: 20px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
 
-        th {
-            background-color: #f0f0f0;
-        }
+    /* TABLES */
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      padding: 20px;
+      overflow-x: auto;
+    }
 
-        caption {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 15px;
+    }
 
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
 
-        #dropdown {
-            text-align: center;
-            background-color: white;
-            box-shadow: 0;
-            box-sizing: 2px;
-            overflow: hidden;
-            align-items: center;
-        }
+    th {
+      background-color: #1e90ff;
+      color: white;
+    }
 
-        #tc {
-            background-color: white;
-            color: black;
-            font-size: medium;
+    tr:hover {
+      background-color: #f1f2f6;
+    }
 
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #2f3542;
+    }
 
-            justify-content: center;
-            text-align: center;
-            box-shadow: 0;
-            border-color: white;
-            font-size: 22px;
-        }
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
 
+      .main-content {
+        margin-left: 200px;
+      }
 
-        .teachers {
-            justify-content: center;
-            background-color: aqua;
-            align-items: center;
-            text-align: center;
+      header h1 {
+        font-size: 20px;
+      }
+    }
 
-        }
+    @media (max-width: 600px) {
+      .sidebar {
+        display: none;
+      }
 
-        caption {
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        .teachers {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: aqua;
-            padding: 20px;
-        }
-    </style>
+      .main-content {
+        margin-left: 0;
+      }
+    }
+    marquee{
+        color: red;
+        font-size: 25px;
+    }
+  </style>
 </head>
 
 <body>
-    <header class="log">
-        <nav>
-            <ul>
-                <li><a href="index.html">
-                        <img src="logout.png" height="45px" width="35px">Log Out
-                    </a></li>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">🏫 Dashboard</a>
+    <a href="#">👨‍🏫 Teachers</a>
+    <a href="#">📄 TC Applications</a>
+    <a href="#">🎓 Admissions</a>
+    <a href="#">🏅 Scholarships</a>
+    <a href="#">📘 Class Syllabus</a>
+    <a href="#">⚙️ Settings</a>
+  </div>
 
-            </ul>
-        </nav>
+  <!-- MAIN CONTENT -->
+   
+  <div class="main-content">
+    <header>
+      <h1>Alpha School Admin Panel</h1>
+      <button onclick="window.location.href='index.html'">Log Out</button>
     </header>
-    <h1>Alpha School Admin Panel</h1>
-    <div class="navbar">
-        <li class="dropdown">
-            <a href="#transfer" class="active">
-                <label for="text">Admin Management
-                    <select id="tc">
-                        <option value="tc4">Teachers</option>
-                        <option value="tc1">TC APPLICATION</option>
-                        <option value="tc2">ADMISSION FORM</option>
-                        <option value="tc3">Toppers Student</option>
-                    </select></a></label>
-        </li>
+
+    <div class="admin-select">
+      <label for="tc"><strong>Admin Management:</strong></label>
+      <select id="tc">
+        <option>Teachers</option>
+        <option>TC Application</option>
+        <option>Admission Form</option>
+        <option>Toppers Students</option>
+      </select>
     </div>
-    <div class="teachers">
-        <input type="text" id="searchInput" placeholder="Search teachers by name, subject, or email"
-            style="margin: 20px; padding: 10px; font-size: 18px; width: 60%;">
 
-        <table>
-            <caption>List of All 56 Teachers</caption>
-            <!-- table content here -->
+    <input type="text" id="searchInput" placeholder="🔍 Search teachers by name, subject, or email...">
+<marquee direction="left">
+    Always Log Out | Remember Your Username And password|
 
-            <table border="1" cellpadding="6" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Salary</th>
-                        <th>Subject</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Arun Sharma</td>
-                        <td>₹45,000</td>
-                        <td>Mathematics</td>
-                        <td>arun.sharma@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Priya Das</td>
-                        <td>₹42,500</td>
-                        <td>English</td>
-                        <td>priya.das@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Ravi Sen</td>
-                        <td>₹48,200</td>
-                        <td>Physics</td>
-                        <td>ravi.sen@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Meena Roy</td>
-                        <td>₹44,800</td>
-                        <td>Chemistry</td>
-                        <td>meena.roy@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Sunil Ghosh</td>
-                        <td>₹46,000</td>
-                        <td>Biology</td>
-                        <td>sunil.ghosh@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Neha Kapoor</td>
-                        <td>₹41,500</td>
-                        <td>History</td>
-                        <td>neha.kapoor@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Ajay Verma</td>
-                        <td>₹47,000</td>
-                        <td>Geography</td>
-                        <td>ajay.verma@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Ritika Saha</td>
-                        <td>₹43,000</td>
-                        <td>Hindi</td>
-                        <td>ritika.saha@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Deepak Nair</td>
-                        <td>₹49,000</td>
-                        <td>Computer Science</td>
-                        <td>deepak.nair@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Shalini Mukherjee</td>
-                        <td>₹42,000</td>
-                        <td>Economics</td>
-                        <td>shalini.m@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td>Manish Tiwari</td>
-                        <td>₹45,600</td>
-                        <td>Political Science</td>
-                        <td>manish.tiwari@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td>Komal Jain</td>
-                        <td>₹40,800</td>
-                        <td>Psychology</td>
-                        <td>komal.jain@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>13</td>
-                        <td>Rajesh Khanna</td>
-                        <td>₹46,500</td>
-                        <td>Philosophy</td>
-                        <td>rajesh.khanna@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>14</td>
-                        <td>Divya Mehta</td>
-                        <td>₹43,700</td>
-                        <td>Sociology</td>
-                        <td>divya.mehta@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>15</td>
-                        <td>Vikram Singh</td>
-                        <td>₹47,200</td>
-                        <td>Physical Education</td>
-                        <td>vikram.singh@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>16</td>
-                        <td>Tanvi Reddy</td>
-                        <td>₹41,900</td>
-                        <td>Art</td>
-                        <td>tanvi.reddy@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>17</td>
-                        <td>Mohit Agarwal</td>
-                        <td>₹48,000</td>
-                        <td>Music</td>
-                        <td>mohit.agarwal@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>18</td>
-                        <td>Preeti Kaur</td>
-                        <td>₹44,300</td>
-                        <td>Dance</td>
-                        <td>preeti.kaur@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>19</td>
-                        <td>Ramesh Iyer</td>
-                        <td>₹46,800</td>
-                        <td>Environmental Science</td>
-                        <td>ramesh.iyer@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>20</td>
-                        <td>Swati Joshi</td>
-                        <td>₹42,600</td>
-                        <td>Commerce</td>
-                        <td>swati.joshi@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>21</td>
-                        <td>Aditya Malhotra</td>
-                        <td>₹45,900</td>
-                        <td>Business Studies</td>
-                        <td>aditya.m@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>22</td>
-                        <td>Ruchi Patel</td>
-                        <td>₹43,500</td>
-                        <td>Accountancy</td>
-                        <td>ruchi.patel@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>23</td>
-                        <td>Gaurav Bhatia</td>
-                        <td>₹47,300</td>
-                        <td>Statistics</td>
-                        <td>gaurav.b@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>24</td>
-                        <td>Smita Rao</td>
-                        <td>₹41,700</td>
-                        <td>French</td>
-                        <td>smita.rao@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>25</td>
-                        <td>Yash Thakur</td>
-                        <td>₹46,200</td>
-                        <td>German</td>
-                        <td>yash.thakur@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>26</td>
-                        <td>Kirti Sengupta</td>
-                        <td>₹42,800</td>
-                        <td>Spanish</td>
-                        <td>kirti.s@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>27</td>
-                        <td>Abhay Kulkarni</td>
-                        <td>₹48,500</td>
-                        <td>Japanese</td>
-                        <td>abhay.k@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>28</td>
-                        <td>Lavanya Pillai</td>
-                        <td>₹44,600</td>
-                        <td>Chinese</td>
-                        <td>lavanya.p@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>29</td>
-                        <td>Karan Desai</td>
-                        <td>₹47,800</td>
-                        <td>Robotics</td>
-                        <td>karan.desai@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>30</td>
-                        <td>Bhavna Tripathi</td>
-                        <td>₹41,300</td>
-                        <td>AI & ML</td>
-                        <td>bhavna.t@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>31</td>
-                        <td>Rohit Chatterjee</td>
-                        <td>₹46,900</td>
-                        <td>Web Development</td>
-                        <td>rohit.c@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>32</td>
-                        <td>Simran Dey</td>
-                        <td>₹43,200</td>
-                        <td>Graphic Design</td>
-                        <td>simran.dey@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>33</td>
-                        <td>Tarun Bhattacharya</td>
-                        <td>₹48,700</td>
-                        <td>Animation</td>
-                        <td>tarun.b@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>34</td>
-                        <td>Rekha Banerjee</td>
-                        <td>₹42,400</td>
-                        <td>Photography</td>
-                        <td>rekha.b@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>35</td>
-                        <td>Jatin Sinha</td>
-                        <td>₹45,300</td>
-                        <td>Design Thinking</td>
-                        <td>jatin.sinha@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>36</td>
-                        <td>Namrata Ghosh</td>
-                        <td>₹41,600</td>
-                        <td>Ethics</td>
-                        <td>namrata.ghosh@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>37</td>
-                        <td>Harshita Nandi</td>
-                        <td>₹46,400</td>
-                        <td>Public Speaking</td>
-                        <td>harshita.n@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>38</td>
-                        <td>Devendra Paul</td>
-                        <td>₹43,800</td>
-                        <td>Drama</td>
-                        <td>devendra.p@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>39</td>
-                        <td>Shreya Sen</td>
-                        <td>₹47,600</td>
-                        <td>Creative Writing</td>
-                        <td>shreya.sen@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>40</td>
-                        <td>Parth Mishra</td>
-                        <td>₹42,900</td>
-                        <td>Journalism</td>
-                        <td>parth.m@example.com
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>41</td>
-                        <td>Sneha Dutta</td>
-                        <td>₹45,400</td>
-                        <td>Social Studies</td>
-                        <td>sneha.dutta@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>42</td>
-                        <td>Arvind Menon</td>
-                        <td>₹46,700</td>
-                        <td>Legal Studies</td>
-                        <td>arvind.menon@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>43</td>
-                        <td>Ritika Jain</td>
-                        <td>₹42,300</td>
-                        <td>Home Science</td>
-                        <td>ritika.jain@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>44</td>
-                        <td>Farhan Ali</td>
-                        <td>₹47,900</td>
-                        <td>Data Science</td>
-                        <td>farhan.ali@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>45</td>
-                        <td>Megha Sinha</td>
-                        <td>₹43,600</td>
-                        <td>Cybersecurity</td>
-                        <td>megha.sinha@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>46</td>
-                        <td>Rohan Gupta</td>
-                        <td>₹48,300</td>
-                        <td>Blockchain</td>
-                        <td>rohan.gupta@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>47</td>
-                        <td>Shweta Roy</td>
-                        <td>₹41,800</td>
-                        <td>Nutrition</td>
-                        <td>shweta.roy@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>48</td>
-                        <td>Abhishek Das</td>
-                        <td>₹46,100</td>
-                        <td>Astrophysics</td>
-                        <td>abhishek.das@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>49</td>
-                        <td>Rina Paul</td>
-                        <td>₹44,900</td>
-                        <td>Marine Biology</td>
-                        <td>rina.paul@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>50</td>
-                        <td>Devika Nair</td>
-                        <td>₹42,700</td>
-                        <td>Fashion Design</td>
-                        <td>devika.nair@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>51</td>
-                        <td>Suraj Sen</td>
-                        <td>₹47,500</td>
-                        <td>Interior Design</td>
-                        <td>suraj.sen@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>52</td>
-                        <td>Radhika Ghosh</td>
-                        <td>₹43,900</td>
-                        <td>Film Studies</td>
-                        <td>radhika.ghosh@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>53</td>
-                        <td>Imran Khan</td>
-                        <td>₹46,600</td>
-                        <td>Game Design</td>
-                        <td>imran.khan@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>54</td>
-                        <td>Anjali Mehta</td>
-                        <td>₹41,400</td>
-                        <td>Speech Therapy</td>
-                        <td>anjali.mehta@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>55</td>
-                        <td>Nikhil Reddy</td>
-                        <td>₹48,100</td>
-                        <td>Special Education</td>
-                        <td>nikhil.reddy@example.com</td>
-                    </tr>
-                    <tr>
-                        <td>56</td>
-                        <td>Trisha Banerjee</td>
-                        <td>₹44,500</td>
-                        <td>Library Science</td>
-                        <td>trisha.b@example.com</td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-        </table>
-    </div>
-    <table>
-        <caption>🎓 Scholarship Recipients</caption>
+   </marquee>
+    <!-- TEACHERS TABLE -->
+    <div class="card">
+      <caption>👨‍🏫 List of All  Teachers</caption>
+      <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Class</th>
-                <th>Stream</th>
-                <th>Scholarship Type</th>
-            </tr>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Subject</th>
+            <th>Email</th>
+          </tr>
         </thead>
         <tbody>
-            <!-- Sample of 10 entries, repeated pattern to reach 100 -->
-            <!-- You can use a backend loop to generate these dynamically -->
-            <tr>
-                <td>1</td>
-                <td>Aditi Sharma</td>
-                <td>10</td>
-                <td>Science</td>
-                <td>Merit-Based</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Rahul Sen</td>
-                <td>12</td>
-                <td>Commerce</td>
-                <td>Need-Based</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Priya Das</td>
-                <td>11</td>
-                <td>Arts</td>
-                <td>Sports</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Arjun Mehta</td>
-                <td>9</td>
-                <td>Science</td>
-                <td>Merit-Based</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Sneha Roy</td>
-                <td>12</td>
-                <td>Arts</td>
-                <td>Cultural</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Kunal Gupta</td>
-                <td>10</td>
-                <td>Commerce</td>
-                <td>Merit-Based</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Riya Banerjee</td>
-                <td>11</td>
-                <td>Science</td>
-                <td>Need-Based</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>Tanmay Bose</td>
-                <td>9</td>
-                <td>Arts</td>
-                <td>Sports</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>Neha Sinha</td>
-                <td>12</td>
-                <td>Science</td>
-                <td>Merit-Based</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>Vikram Das</td>
-                <td>10</td>
-                <td>Commerce</td>
-                <td>Cultural</td>
-            </tr>
+          <tr>
+            <td>1</td>
+            <td>Arun Sharma</td>
+            <td>₹45,000</td>
+            <td>Mathematics</td>
+            <td>arun.sharma@example.com</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Priya Das</td>
+            <td>₹42,500</td>
+            <td>English</td>
+            <td>priya.das@example.com</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Ravi Sen</td>
+            <td>₹48,200</td>
+            <td>Physics</td>
+            <td>ravi.sen@example.com</td>
+          </tr>
+          <tbody>
+  <tr>
+    <td>1</td>
+    <td>Arun Sharma</td>
+    <td>₹45,000</td>
+    <td>Mathematics</td>
+    <td>arun.sharma@example.com</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Priya Das</td>
+    <td>₹42,500</td>
+    <td>English</td>
+    <td>priya.das@example.com</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Ravi Sen</td>
+    <td>₹48,200</td>
+    <td>Physics</td>
+    <td>ravi.sen@example.com</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Meena Kapoor</td>
+    <td>₹44,800</td>
+    <td>Chemistry</td>
+    <td>meena.kapoor@example.com</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Ankit Roy</td>
+    <td>₹46,000</td>
+    <td>Biology</td>
+    <td>ankit.roy@example.com</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Sunita Paul</td>
+    <td>₹40,500</td>
+    <td>History</td>
+    <td>sunita.paul@example.com</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Vikram Das</td>
+    <td>₹47,200</td>
+    <td>Geography</td>
+    <td>vikram.das@example.com</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Neha Verma</td>
+    <td>₹43,600</td>
+    <td>Computer Science</td>
+    <td>neha.verma@example.com</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Ramesh Iyer</td>
+    <td>₹49,000</td>
+    <td>Mathematics</td>
+    <td>ramesh.iyer@example.com</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Simran Kaur</td>
+    <td>₹42,000</td>
+    <td>English</td>
+    <td>simran.kaur@example.com</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Amit Singh</td>
+    <td>₹50,500</td>
+    <td>Physics</td>
+    <td>amit.singh@example.com</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Kavita Nair</td>
+    <td>₹41,800</td>
+    <td>Hindi</td>
+    <td>kavita.nair@example.com</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>Deepak Mehra</td>
+    <td>₹47,800</td>
+    <td>Chemistry</td>
+    <td>deepak.mehra@example.com</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>Ritika Bose</td>
+    <td>₹44,000</td>
+    <td>Art</td>
+    <td>ritika.bose@example.com</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>Harish Patel</td>
+    <td>₹45,700</td>
+    <td>Economics</td>
+    <td>harish.patel@example.com</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>Swati Ghosh</td>
+    <td>₹43,500</td>
+    <td>Political Science</td>
+    <td>swati.ghosh@example.com</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>Rajeev Kumar</td>
+    <td>₹49,800</td>
+    <td>Mathematics</td>
+    <td>rajeev.kumar@example.com</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>Shalini Bhat</td>
+    <td>₹41,200</td>
+    <td>Sociology</td>
+    <td>shalini.bhat@example.com</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>Manoj Yadav</td>
+    <td>₹46,900</td>
+    <td>Physics</td>
+    <td>manoj.yadav@example.com</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>Rupa Sen</td>
+    <td>₹43,700</td>
+    <td>English</td>
+    <td>rupa.sen@example.com</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>Aditya Roy</td>
+    <td>₹47,400</td>
+    <td>Computer Science</td>
+    <td>aditya.roy@example.com</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>Sapna Dey</td>
+    <td>₹42,800</td>
+    <td>Geography</td>
+    <td>sapna.dey@example.com</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>Ajay Malhotra</td>
+    <td>₹45,900</td>
+    <td>Physical Education</td>
+    <td>ajay.malhotra@example.com</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Tanvi Mehta</td>
+    <td>₹44,200</td>
+    <td>Psychology</td>
+    <td>tanvi.mehta@example.com</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>Nikhil Rana</td>
+    <td>₹48,000</td>
+    <td>Business Studies</td>
+    <td>nikhil.rana@example.com</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>Geeta Pillai</td>
+    <td>₹41,600</td>
+    <td>Music</td>
+    <td>geeta.pillai@example.com</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>Rahul Khanna</td>
+    <td>₹46,500</td>
+    <td>Biology</td>
+    <td>rahul.khanna@example.com</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>Preeti Sinha</td>
+    <td>₹42,300</td>
+    <td>English</td>
+    <td>preeti.sinha@example.com</td>
+  </tr>
+
+
+         
         </tbody>
-    </table>
-    <table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-    <tr>
-      <th>Class</th>
-      <th>Mathematics</th>
-      <th>Science</th>
-      <th>English</th>
-      <th>Social Studies</th>
-      <th>Computer</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Class 5</td>
-      <td>Fractions, Decimals, Geometry</td>
-      <td>Plants, Animals, Water</td>
-      <td>Grammar, Reading Comprehension</td>
-      <td>History of India, Maps</td>
-      <td>Basics of Computers</td>
-    </tr>
-    <tr>
-      <td>Class 6</td>
-      <td>Integers, Algebra, Mensuration</td>
-      <td>Food, Body Movements, Electricity</td>
-      <td>Poetry, Essay Writing</td>
-      <td>Ancient History, Civics</td>
-      <td>MS Word, Paint</td>
-    </tr>
-    <tr>
-      <td>Class 7</td>
-      <td>Rational Numbers, Simple Equations</td>
-      <td>Nutrition, Respiration, Light</td>
-      <td>Story Writing, Grammar</td>
-      <td>Medieval History, Geography</td>
-      <td>MS Excel, Internet Basics</td>
-    </tr>
-    <tr>
-      <td>Class 8</td>
-      <td>Linear Equations, Data Handling</td>
-      <td>Reproduction, Sound, Force</td>
-      <td>Formal Letters, Literature</td>
-      <td>Modern History, Resources</td>
-      <td>HTML Basics, Cyber Safety</td>
-    </tr>
-    <tr>
-      <td>Class 9</td>
-      <td>Polynomials, Geometry, Statistics</td>
-      <td>Cell Structure, Motion, Gravitation</td>
-      <td>Drama, Novel Study</td>
-      <td>Freedom Struggle, Climate</td>
-      <td>Python Basics, Networking</td>
-    </tr>
-    <tr>
-      <td>Class 10</td>
-      <td>Trigonometry, Probability, Quadratic Equations</td>
-      <td>Life Processes, Electricity, Magnetic Effects</td>
-      <td>Debate, Literature Analysis</td>
-      <td>Democracy, Globalization</td>
-      <td>Advanced Python, Web Design</td>
-    </tr>
-  </tbody>
-</table>
-<table><tbody>
- <caption>TC Application Records</caption>
-    <thead>
-      <tr>
-        <th>Serial No.</th>
-        <th>Student Name</th>
-        <th>Class</th>
-        <th>Roll No.</th>
-        <th>Date of Application</th>
-        <th>Reason for TC</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Riya Das</td>
-        <td>VIII</td>
-        <td>23</td>
-        <td>2025-10-15</td>
-        <td>Relocation</td>
-        <td>Pending</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Arjun Sen</td>
-        <td>IX</td>
-        <td>12</td>
-        <td>2025-10-17</td>
-        <td>Admission in another school</td>
-        <td>Approved</td>
-      </tr>
-      <!-- Add more rows as needed -->
-    </tbody>
-  </table>
+      </table>
+    </div>
 
+    <!-- SCHOLARSHIP TABLE -->
+    <div class="card">
+      <caption>🎓 Scholarship Recipients</caption>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Stream</th>
+            <th>Scholarship Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Aditi Sharma</td>
+            <td>10</td>
+            <td>Science</td>
+            <td>Merit-Based</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Rahul Sen</td>
+            <td>12</td>
+            <td>Commerce</td>
+            <td>Need-Based</td>
+          </tr>
+          <tbody>
+  <tr>
+    <td>1</td>
+    <td>Arun Sharma</td>
+    <td>₹45,000</td>
+    <td>Mathematics</td>
+    <td>arun.sharma@example.com</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Priya Das</td>
+    <td>₹42,500</td>
+    <td>English</td>
+    <td>priya.das@example.com</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Ravi Sen</td>
+    <td>₹48,200</td>
+    <td>Physics</td>
+    <td>ravi.sen@example.com</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Meena Kapoor</td>
+    <td>₹44,800</td>
+    <td>Chemistry</td>
+    <td>meena.kapoor@example.com</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Ankit Roy</td>
+    <td>₹46,000</td>
+    <td>Biology</td>
+    <td>ankit.roy@example.com</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Sunita Paul</td>
+    <td>₹40,500</td>
+    <td>History</td>
+    <td>sunita.paul@example.com</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Vikram Das</td>
+    <td>₹47,200</td>
+    <td>Geography</td>
+    <td>vikram.das@example.com</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Neha Verma</td>
+    <td>₹43,600</td>
+    <td>Computer Science</td>
+    <td>neha.verma@example.com</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Ramesh Iyer</td>
+    <td>₹49,000</td>
+    <td>Mathematics</td>
+    <td>ramesh.iyer@example.com</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Simran Kaur</td>
+    <td>₹42,000</td>
+    <td>English</td>
+    <td>simran.kaur@example.com</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Amit Singh</td>
+    <td>₹50,500</td>
+    <td>Physics</td>
+    <td>amit.singh@example.com</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Kavita Nair</td>
+    <td>₹41,800</td>
+    <td>Hindi</td>
+    <td>kavita.nair@example.com</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>Deepak Mehra</td>
+    <td>₹47,800</td>
+    <td>Chemistry</td>
+    <td>deepak.mehra@example.com</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>Ritika Bose</td>
+    <td>₹44,000</td>
+    <td>Art</td>
+    <td>ritika.bose@example.com</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>Harish Patel</td>
+    <td>₹45,700</td>
+    <td>Economics</td>
+    <td>harish.patel@example.com</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>Swati Ghosh</td>
+    <td>₹43,500</td>
+    <td>Political Science</td>
+    <td>swati.ghosh@example.com</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>Rajeev Kumar</td>
+    <td>₹49,800</td>
+    <td>Mathematics</td>
+    <td>rajeev.kumar@example.com</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>Shalini Bhat</td>
+    <td>₹41,200</td>
+    <td>Sociology</td>
+    <td>shalini.bhat@example.com</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>Manoj Yadav</td>
+    <td>₹46,900</td>
+    <td>Physics</td>
+    <td>manoj.yadav@example.com</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>Rupa Sen</td>
+    <td>₹43,700</td>
+    <td>English</td>
+    <td>rupa.sen@example.com</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>Aditya Roy</td>
+    <td>₹47,400</td>
+    <td>Computer Science</td>
+    <td>aditya.roy@example.com</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>Sapna Dey</td>
+    <td>₹42,800</td>
+    <td>Geography</td>
+    <td>sapna.dey@example.com</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>Ajay Malhotra</td>
+    <td>₹45,900</td>
+    <td>Physical Education</td>
+    <td>ajay.malhotra@example.com</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Tanvi Mehta</td>
+    <td>₹44,200</td>
+    <td>Psychology</td>
+    <td>tanvi.mehta@example.com</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>Nikhil Rana</td>
+    <td>₹48,000</td>
+    <td>Business Studies</td>
+    <td>nikhil.rana@example.com</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>Geeta Pillai</td>
+    <td>₹41,600</td>
+    <td>Music</td>
+    <td>geeta.pillai@example.com</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>Rahul Khanna</td>
+    <td>₹46,500</td>
+    <td>Biology</td>
+    <td>rahul.khanna@example.com</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>Preeti Sinha</td>
+    <td>₹42,300</td>
+    <td>English</td>
+    <td>preeti.sinha@example.com</td>
+  </tr>
+</tbody>
 
+        </tbody>
+      </table>
+    </div>
 
-    <script>
-        document.getElementById("searchInput").addEventListener("keyup", function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll(".teachers table tbody tr");
+    <!-- TC APPLICATION TABLE -->
+    <div class="card">
+      <caption>📄 TC Application Records</caption>
+      <table>
+        <thead>
+          <tr>
+            <th>Serial No.</th>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Roll No.</th>
+            <th>Date of Application</th>
+            <th>Reason for TC</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Riya Das</td>
+            <td>VIII</td>
+            <td>23</td>
+            <td>2025-10-15</td>
+            <td>Relocation</td>
+            <td>Pending</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Arjun Sen</td>
+            <td>IX</td>
+            <td>12</td>
+            <td>2025-10-17</td>
+            <td>Admission in another school</td>
+            <td>Approved</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? "" : "none";
-            });
-        });
-    </script>
-
+  <script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+      const filter = this.value.toLowerCase();
+      const rows = document.querySelectorAll("tbody tr");
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    });
+  </script>
 </body>
 
 </html>
